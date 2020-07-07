@@ -52,7 +52,7 @@ Harbor 不仅提供了上文提到的几种核心特性，还支持 AD/LDAP 集�
 
 ## 高可用 Harbor 节点的构想
 
-![multi-region](docker_distribution_img/ha-harbor.png)
+![ha-harbor](docker_distribution_img/ha-harbor.png)
 
 通过 Nginx 负载均衡连接到多个 Harbor 节点上，若干个 Harbor 节点依赖同一个 Redis，同一个 Aurora PostgreSQL Serverless 服务，同一个 S3 服务。
 
@@ -70,7 +70,7 @@ Docker Registry 是否要采用高可用形式部署，有待后续调研。
 
 ##  本地跨区域方案
 
-![multi-region](docker_distribution_img/local-multi-region.png)
+![local-multi-region](docker_distribution_img/local-multi-region.png)
 
 为了实现本地的多区域覆盖，在每一个地区都部署一个 Harbor 节点，依赖该区域的 S3 服务做映像存储。
 
@@ -80,7 +80,7 @@ Docker Registry 是否要采用高可用形式部署，有待后续调研。
 
 ##  内外网数据流向
 
-![multi-region](docker_distribution_img/data-architecture.png)
+![data-architecture](docker_distribution_img/data-architecture.png)
 
 本地的 Harbor 节点负责将映像同步到有需要的其他本地 Harbor 节点上，也负责将需要进行云端部署的映像同步到云端的高可用 Harbor 节点上。
 
@@ -95,7 +95,7 @@ Docker Registry 是否要采用高可用形式部署，有待后续调研。
 
 ##  如何与持续集成、持续交付系统集成
 
-![multi-region](docker_distribution_img/ci-cd-architecture.png)
+![ci-cd-architecture](docker_distribution_img/ci-cd-architecture.png)
 
 所有的映像都应由持续集成（Continuous Integration）系统构建，然后通过独立的机器人账号同步到 CI 系统所属区域的 Harbor 节点。本地的 CI 系统 push 到本地的 Harbor 节点，云端的 CI 系统 push 到 Region 1 的高可用 Harbor 节点。
 
